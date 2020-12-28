@@ -49,13 +49,18 @@ def TestInequality():
 
 def TestKappaCondition():
     rng = np.linspace(0,1,1000)
+    succ = []
     for kappa in rng:
         sim = {"xz":(1.0*kappa)/2,"xy":kappa,"yz":kappa}
         dist = {k:np.sqrt(2-2*v) for k,v in sim.items()}
-        if dist["xz"] > dist["xy"] + dist["yz"]:
-            print(kappa)
-            return
-            
+        ineq = (dist["xz"] > dist["xy"] + dist["yz"])      
+        if succ:
+            assert(ineq)
+        elif ineq:
+            succ.append(kappa)
+    print(min(succ))
+    return kappa
+
 if __name__ == "__main__":
     TestKappaCondition()
 
